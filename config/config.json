@@ -1,0 +1,45 @@
+{
+  "serviceName": "transactions-ms",
+  "port": 3002,
+  "amqp": {
+    "uri": "amqp://guest:guest@localhost:5672",
+    "subs": [
+      {
+        "topicName": "userChange",
+        "topicEvent": "user-change",
+        "topicType": "fanout",
+        "routingKey": ""
+      },
+      {
+        "topicName": "transactionProval",
+        "topicEvent": "transaction-proval",
+        "topicType": "direct",
+        "routingKey": "transactions"
+      }
+    ],
+    "pubs": [
+      {
+        "topicName": "sendLogs",
+        "topicEvent": "send-logs",
+        "topicType": "fanout",
+        "routingKey": ""
+      },
+      {
+        "topicName": "transactionAccepted",
+        "topicEvent": "transaction-accepted",
+        "topicType": "direct",
+        "routingKey": "wallet"
+      }
+    ]
+  },
+  "db": {
+    "client": "pg",
+    "connection": {
+      "host": "127.0.0.1",
+      "port": 5430,
+      "username": "postgres",
+      "password": "pass",
+      "database": "transactions"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+FROM node:14.16.1-alpine
+
+WORKDIR /usr/local/app
+
+COPY package.json .
+COPY package-lock.json .
+
+RUN npm install --silent --progress=false
+
+COPY . .
+
+EXPOSE 3002
+
+ENTRYPOINT [ "npm", "run", "dev" ]
