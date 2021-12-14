@@ -4,6 +4,7 @@ module.exports = ({
   logger,
   createUserUsecase,
   updateUserUsecase,
+  deleteUserUsecase,
   provalTransactionUsecase,
 }) => ({
   onUserChange: async (msg) => {
@@ -14,6 +15,8 @@ module.exports = ({
         await createUserUsecase.create(msg.user);
       } else if (msg.event_type === 'update') {
         await updateUserUsecase.update(msg.user);
+      } else if (msg.event_type === 'delete') {
+        await deleteUserUsecase.delete(msg.user.id);
       }
     } catch (err) {
       logger.error(`${callName} error ocoured: ${err}`);

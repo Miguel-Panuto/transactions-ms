@@ -1,3 +1,5 @@
+const { v4: uuid } = require('uuid');
+
 const fileName = 'UserRepository';
 
 module.exports = ({ db, logger }) => ({
@@ -33,5 +35,21 @@ module.exports = ({ db, logger }) => ({
     const users = await db.select('id').from('users').where('key', key);
     if (users.length !== 1) throw new Error('not single user');
     return users[0];
+  },
+
+  delete: async (id) => {
+    const callName = `${fileName}.delete()`;
+    logger.info(`${callName} entered with id ${id}`);
+    const delUser = await db
+      .update({
+        name: 'Usuário deletado',
+        document: uuid(),
+        email: uuid(),
+        phone: uuid(),
+        key: null,
+      })
+      .from('users')
+      .where('id', id);
+    return delUser;
   },
 });
